@@ -3,10 +3,10 @@ const app = express();
 const graphqlHTTP = require("express-graphql");
 const schema = require("./schema/schema");
 const mongoose = require("mongoose");
-const Movie = require("./models/Move");
+const cors = require("cors");
+
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
-const cors = require("cors")
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true , tlsAllowInvalidCertificates: true});
 app.use(cors());

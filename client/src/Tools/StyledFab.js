@@ -4,13 +4,13 @@ import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         fab: {
-            position: "absolute",
-            marginTop: "20px",
-            down: "10px",
-            right: "10px"
+            position: "sticky",
+            margin: "20px",
+            bottom: "10px"
+
         }
     }),
 );
@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) =>
     const StyledFab = () =>{
 const style = useStyles()
 
-    return(<Fab size="medium" color="secondary" aria-label="add" className={style.fab}>
-    <AddIcon />
+    return(<Fab component="button" size="medium" color="secondary" aria-label="add" className={style.fab}>
+    <AddIcon component="span"/>
     </Fab>)}
 
 export default StyledFab

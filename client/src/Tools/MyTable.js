@@ -9,20 +9,22 @@ import TableBody from "@material-ui/core/TableBody";
 import StyledFab from "./StyledFab";
 
 
-const MyTable = props =>
-    <Typography component="div">
+const MyTable = props => {
+    if (!props.data) return (<></>)
+    return (<Typography component="div" >
         <TableContainer component={Paper}>
             <Table component="table" aria-label="simple table">
-                <TableHead component="thead">
+                <TableHead component="thead" >
                     <TableRow component="tr">
-                        {props.cols.map(col => <TableCell key={col}>{col}</TableCell>)}
+                        {props.cols.map(col => <TableCell variant="head" key={col}>{col}</TableCell>)}
                     </TableRow>
                 </TableHead>
                 <TableBody component="tbody">{props.data.map((row) => (
                     <TableRow key={row.id} component="tr">
                         {Object.keys(row).map((key) =>
-                            key !== "id" && <TableCell key={key}>
-                                {typeof row[key] === "object" ? row[key]["name"] : row[key]}
+                            key !== "id" && key !== "__typename" &&
+                            <TableCell key={key}>
+                                {props.cell(row, key)}
                             </TableCell>)}
                         <TableCell>{row.id}</TableCell>
                     </TableRow>
@@ -30,6 +32,6 @@ const MyTable = props =>
             </Table>
         </TableContainer>
         <StyledFab/>
-    </Typography>
-
+    </Typography>)
+}
 export default MyTable

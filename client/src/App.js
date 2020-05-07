@@ -10,14 +10,10 @@ import Header from "./components/Header/Header";
 
 import ApolloClient from "apollo-boost";
 import {ApolloProvider} from "react-apollo"
-import {HttpLink} from 'apollo-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
 
-const cache = new InMemoryCache();
-const link = {
-    uri: 'http://localhost:3001/graphqls',
-};
-const client = new ApolloClient({cache, link});
+const client = new ApolloClient({
+    uri: 'http://localhost:3001/graphql'
+});
 const App = () =>
     <ApolloProvider client={client}>
         <BrowserRouter>
