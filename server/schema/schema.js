@@ -76,9 +76,9 @@ const Mutation = new GraphQLObjectType(
         fields: {
             addMovie: {
                 type: MovieType,
-                args: {name: {type: GraphQLString}, genre: {type: GraphQLString}, directorId: {type: GraphQLID}},
+                args: {name: {type: GraphQLString}, genre: {type: GraphQLString}, director: {type: GraphQLID}},
                 resolve(parents, args) {
-                    const movie = new Movies({name: args.name, genre: args.genre, directorId: args.directorId});
+                    const movie = new Movies({name: args.name, genre: args.genre, directorId: args.director});
                     return movie.save()
                 }
             },

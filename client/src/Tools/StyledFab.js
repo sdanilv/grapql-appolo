@@ -10,16 +10,18 @@ const useStyles = makeStyles(() =>
             position: "sticky",
             margin: "20px",
             bottom: "10px"
-
         }
-    }),
-);
+    }),);
 
-    const StyledFab = () =>{
-const style = useStyles()
-
-    return(<Fab component="button" size="medium" color="secondary" aria-label="add" className={style.fab}>
-    <AddIcon component="span"/>
-    </Fab>)}
+const StyledFab = props => {
+    const style = useStyles()
+    const click = ()=>{
+        props.callback(true)}
+    return (
+        <Fab onClick={click} component="button" size="medium"
+             color="secondary" aria-label="add" className={style.fab}>
+            <AddIcon/>
+        </Fab>)
+}
 
 export default StyledFab

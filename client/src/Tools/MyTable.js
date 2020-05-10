@@ -1,5 +1,6 @@
 import React from "react";
-import {Paper, Typography} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
+import LinearProgress from '@material-ui/core/LinearProgress';
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -7,31 +8,37 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import StyledFab from "./StyledFab";
-
+import MyMenu from "./MyMenu";
+import Container from "@material-ui/core/Container";
 
 const MyTable = props => {
-    if (!props.data) return (<></>)
-    return (<Typography component="div" >
+    const editCallback = (data) => {
+        props.setOpenEdit(true)
+        props.editCallback(data)
+    }
+
+    if (!props.data) return (<LinearProgress />)
+    return (<>
         <TableContainer component={Paper}>
-            <Table component="table" aria-label="simple table">
-                <TableHead component="thead" >
-                    <TableRow component="tr">
+            <Table  aria-label="simple table">
+                <TableHead  >
+                    <TableRow >
                         {props.cols.map(col => <TableCell variant="head" key={col}>{col}</TableCell>)}
                     </TableRow>
                 </TableHead>
-                <TableBody component="tbody">{props.data.map((row) => (
-                    <TableRow key={row.id} component="tr">
+                <TableBody >{props.data.map((row) => (
+                    <TableRow key={row.id} >
                         {Object.keys(row).map((key) =>
                             key !== "id" && key !== "__typename" &&
                             <TableCell key={key}>
                                 {props.cell(row, key)}
                             </TableCell>)}
-                        <TableCell>{row.id}</TableCell>
+                        <TableCell><MyMenu editCallback={()=>editCallback(row)} id={row.id} /></TableCell>
                     </TableRow>
                 ))}</TableBody>
             </Table>
         </TableContainer>
-        <StyledFab/>
-    </Typography>)
+        <StyledFab callback={props.fabCallback}/>
+    </>)
 }
 export default MyTable
