@@ -33,7 +33,9 @@ const MyTable = props => {
                             <TableCell key={key}>
                                 {props.cell(row, key)}
                             </TableCell>)}
-                        <TableCell><MyMenu editCallback={()=>editCallback(row)} id={row.id} /></TableCell>
+                        <TableCell>
+                       <MyMenu delete={props.delete} editCallback={()=>editCallback(row)} id={row.id} />
+                        </TableCell>
                     </TableRow>
                 ))}</TableBody>
             </Table>

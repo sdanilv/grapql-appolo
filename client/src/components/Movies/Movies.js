@@ -4,14 +4,25 @@ import {gql} from "apollo-boost";
 import {graphql} from "react-apollo";
 import AddMovie from "./Movie/AddMovie";
 import EditMovie from "./Movie/EditMovie";
+import {compose} from "recompose";
+import {getMoviesQuery} from "./getMoviesQuery ";
 
 const cols = ["Name", "Genre", "Director", "Options"]
-const getMoviesHOC = graphql(gql`query Movies{ movies { name, genre, director{name, id}, id }} `)
-const deleteMovieHOC =graphql(gql`
-mutation deleteMovie($id: ID!){}`)
+
+const getMoviesHOC = graphql(getMoviesQuery)
+const deleteMovieHOC = graphql(gql`
+mutation deleteMovie($id: ID!){
+deleteMovie(id:$id){name}}`,
+    {
+        props: props => ({
+            deleteMovie: id => props.mutate({variables: {id}})
+        }),
+        options:{refetchQueries: [{query: getMoviesQuery}]}
+
+    })
 const cell = (row, key) => typeof row[key] === "object" ? row[key]["name"] : row[key] !== "Movie" && row[key]
 
-const Movies = ({data}) => {
+const Movies = ({data, deleteMovie}) => {
 
     const [openAdd, setOpenAdd] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
@@ -19,11 +30,11 @@ const Movies = ({data}) => {
 
     return (<>
             <MyTable editCallback={setMovie} fabCallback={setOpenAdd} setOpenEdit={setOpenEdit}
-                     cols={cols} data={data.movies} cell={cell}/>
+                     cols={cols} data={data.movies} cell={cell} delete={deleteMovie}/>
             <AddMovie open={openAdd} setOpen={setOpenAdd}/>
             <EditMovie open={openEdit} setOpen={setOpenEdit} movie={movie}/>
         </>
     )
 }
 
-export default getMoviesHOC(Movies)
+export default compose(getMoviesHOC, deleteMovieHOC)(Movies)
