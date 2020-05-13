@@ -22,7 +22,8 @@ const MyMenu = (props) => {
     };
 
     const handleClose = () => setAnchorEl(null)
-
+ const deleteCallback = () =>{
+     props.delete(props.id)}
     const handleEdit = () => {
         props.editCallback()
         handleClose()
@@ -45,7 +46,7 @@ const MyMenu = (props) => {
                 <MenuItem onClick={handleEdit}>Edit&#8195;<EditIcon color="primary"/></MenuItem>
                 <MenuItem onClick={handleDelete}>Delete<DeleteIcon color="error"/></MenuItem>
             </Menu>
-            <DeleteDialog deleteCallback={()=>props.delete(props.id)} open={openDeleteDialog}
+            <DeleteDialog deleteCallback={deleteCallback} open={openDeleteDialog}
                           setOpen={setOpenDeleteDialog}/>
         </div>
     );

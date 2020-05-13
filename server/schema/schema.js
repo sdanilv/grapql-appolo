@@ -13,7 +13,6 @@ const DirectType = new GraphQLObjectType({
         movies: {
             type: new GraphQLList(MovieType),
             resolve(parents, arg) {
-                console.log(parents);
                 return Movies.find({directorId: parents._id})
             }
         }

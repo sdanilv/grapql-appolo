@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const Director = new Schema(
     {
-        _id: mongoose.Types.ObjectId,
+
         name: String,
         age: Number,
 

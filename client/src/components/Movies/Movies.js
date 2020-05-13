@@ -1,18 +1,15 @@
 import React, {useState} from "react"
 import MyTable from "../../Tools/MyTable";
-import {gql} from "apollo-boost";
 import {graphql} from "react-apollo";
 import AddMovie from "./Movie/AddMovie";
 import EditMovie from "./Movie/EditMovie";
 import {compose} from "recompose";
-import {getMoviesQuery} from "./getMoviesQuery ";
+import {deleteMovieQuery, getMoviesQuery} from "./MoviesQuery";
 
 const cols = ["Name", "Genre", "Director", "Options"]
 
 const getMoviesHOC = graphql(getMoviesQuery)
-const deleteMovieHOC = graphql(gql`
-mutation deleteMovie($id: ID!){
-deleteMovie(id:$id){name}}`,
+const deleteMovieHOC = graphql(deleteMovieQuery,
     {
         props: props => ({
             deleteMovie: id => props.mutate({variables: {id}})
@@ -20,7 +17,7 @@ deleteMovie(id:$id){name}}`,
         options:{refetchQueries: [{query: getMoviesQuery}]}
 
     })
-const cell = (row, key) => typeof row[key] === "object" ? row[key]["name"] : row[key] !== "Movie" && row[key]
+const cell = (row, key) => key === "director"&&row[key] ? row[key]["name"] : row[key] !== "Movie" && row[key]
 
 const Movies = ({data, deleteMovie}) => {
 

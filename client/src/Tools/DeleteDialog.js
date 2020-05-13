@@ -25,7 +25,7 @@ const DeleteDialog = ({open, setOpen, deleteCallback}) => {
     return <Dialog open={open}>
         <DialogTitle> Are you sure that you want to delete element?</DialogTitle>
         <div className={classes.root}>
-            <Button onClick={()=>setOpen()} color="primary" startIcon={<CancelIcon/>}>
+            <Button onClick={cancelHandler} color="primary" startIcon={<CancelIcon/>}>
                 Cancel
             </Button>
             <Button onClick={deleteHandler} color="secondary" startIcon={<DeleteIcon/>}>

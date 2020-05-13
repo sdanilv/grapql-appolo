@@ -1,8 +1,16 @@
-import React from 'react' 
-import Movie from "../../Movies/Movie/Movie" 
+import React from 'react'
 
-const AddDirector = () => {
-    return <Movie title={"Add Movie"}  buttonName="Add"  {...props}/>
-} 
+import {useMutation} from "@apollo/react-hooks";
+import Director from "./Director";
+import {addDirectorsQuery, getDirectorsQuery} from "../DirectorQueries";
 
-export default addDirectorMutation(AddDirector) 
+const AddDirector = (props) => {
+    const [addDirector] = useMutation(addDirectorsQuery, {refetchQueries:[{query: getDirectorsQuery}]})
+     const addDirectorMutation = ({name, age})=>{
+        addDirector({variables:{name, age:Number(age)}})
+
+    }
+    return <Director mutation={addDirectorMutation} title={"Add Movie"} submitName="Add"  {...props}/>
+}
+
+export default AddDirector
